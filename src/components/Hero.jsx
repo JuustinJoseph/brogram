@@ -18,13 +18,13 @@ const Hero = () => {
         programs:
       </p>
       <ul className="rules-list">
-        <div className="rule-tem">
+        <div className="rule-item">
           <p>
             <b>REST</b>
           </p>
           <p>Ensure that you are taking rest days where necessary.</p>
         </div>
-        <div className="rule-tem">
+        <div className="rule-item">
           <p>
             <b>REPS</b>
           </p>
@@ -35,7 +35,7 @@ const Hero = () => {
             </abbr>
           </p>
         </div>
-        <div className="rule-tem">
+        <div className="rule-item">
           <p>
             <b>WEIGHT*</b>
           </p>

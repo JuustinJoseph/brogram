@@ -1,12 +1,17 @@
 import React from "react";
+import Modal from "./Modal";
 
 const WorkoutCard = (props) => {
   const { type, workoutIndex, trainingPlan, dayNum, icon } = props;
 
   const { warmup, workout } = trainingPlan || {};
 
+  const showExerciseDescription = { name: "asasss", description: "ewfjkrje" };
+
   return (
     <div className="workout-container">
+      <Modal showExerciseDescription={showExerciseDescription} />
+      {/* {(handleCloseModal = () => {})} */}
       <div className="workout-card card">
         <div className="plan-card-header">
           <p>Day {dayNum}</p>
@@ -35,19 +40,18 @@ const WorkoutCard = (props) => {
                 <button className="help-icon">
                   <i className="fa-regular fa-circle-question"></i>
                 </button>
-                <p className="exercise-info">{warmupExercise.sets}</p>
-                <p className="exercise-info">{warmupExercise.reps}</p>
-                <input
-                  className="weight-input"
-                  placeholder="N/A"
-                  disabled
-                ></input>
               </div>
+              <p className="exercise-info">{warmupExercise.sets}</p>
+              <p className="exercise-info">{warmupExercise.reps}</p>
+              <input
+                className="weight-input"
+                placeholder="N/A"
+                disabled
+              ></input>
             </React.Fragment>
           );
         })}
       </div>
-
       <div className="workout-grid">
         <div className="exercise-name">
           <h4>Workout</h4>
@@ -65,10 +69,11 @@ const WorkoutCard = (props) => {
                 <button className="help-icon">
                   <i className="fa-regular fa-circle-question"></i>
                 </button>
-                <p className="exercise-info">{workoutExercise.sets}</p>
-                <p className="exercise-info">{workoutExercise.reps}</p>
-                <input className="weight-input" placeholder="14"></input>
               </div>
+
+              <p className="exercise-info">{workoutExercise.sets}</p>
+              <p className="exercise-info">{workoutExercise.reps}</p>
+              <input className="weight-input" placeholder="14"></input>
             </React.Fragment>
           );
         })}

@@ -3,11 +3,11 @@ import { workoutProgram as training_plan } from "../utils/index";
 import WorkoutCard from "./WorkoutCard";
 
 const Grid = () => {
-  const isLocked = false;
+  const isLocked = true;
   const selectedWorkout = 4;
 
   return (
-    <div className="training-grid-plan">
+    <div className="training-plan-grid">
       {Object.keys(training_plan).map((workout, workoutIndex) => {
         //type of workout
         const type =
