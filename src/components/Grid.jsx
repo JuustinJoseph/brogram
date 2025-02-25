@@ -1,10 +1,12 @@
 import React from "react";
+import { useState } from "react";
 import { workoutProgram as training_plan } from "../utils/index";
 import WorkoutCard from "./WorkoutCard";
 
 const Grid = () => {
   const isLocked = true;
-  const selectedWorkout = 4;
+
+  const [selectedWorkout, setSelectedWorkout] = useState(null);
 
   return (
     <div className="training-plan-grid">
@@ -49,6 +51,9 @@ const Grid = () => {
 
         return (
           <button
+            onClick={() => {
+              setSelectedWorkout(workoutIndex);
+            }}
             className={"card plan-card  " + (isLocked ? "inactive" : "")}
             key={workoutIndex}
           >
