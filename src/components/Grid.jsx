@@ -1,16 +1,63 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { workoutProgram as training_plan } from "../utils/index";
 import WorkoutCard from "./WorkoutCard";
 
 const Grid = () => {
-  const isLocked = true;
+  const [savedWorkouts, setSavedWorkouts] = useState(null);
 
   const [selectedWorkout, setSelectedWorkout] = useState(null);
+
+  const completedWorkouts = Object.keys(savedWorkouts || {}).filter((val) => {
+    const entry = savedWorkouts[val];
+    return entry.isComplete;
+  });
+
+  function handleSave(index, data) {
+    const newObj = {
+      ...savedWorkouts,
+      [index]: {
+        ...data,
+        isComplete: !!data.isComplete || !!savedWorkouts?.[index]?.isComplete,
+      },
+    };
+
+    setSavedWorkouts(newObj);
+    localStorage.setItem("brogram", JSON.stringify(newObj));
+    setSelectedWorkout(null);
+  }
+
+  function handleComplete(index, data) {
+    const newObj = {
+      ...data,
+    };
+    newObj.isComplete = true;
+    handleSave(index, newObj);
+  }
+
+  useEffect(() => {
+    if (!localStorage) {
+      return;
+    }
+
+    let savedData = {};
+
+    if (localStorage.getItem("brogram")) {
+      savedData = JSON.parse(localStorage.getItem("brogram"));
+    }
+
+    setSavedWorkouts(savedData);
+  }, []);
 
   return (
     <div className="training-plan-grid">
       {Object.keys(training_plan).map((workout, workoutIndex) => {
+        //checking if locked
+        const isLocked =
+          workoutIndex == 0
+            ? false
+            : !completedWorkouts.includes(`${workoutIndex - 1}`);
+
         //type of workout
         const type =
           workoutIndex % 3 == 0
@@ -45,6 +92,9 @@ const Grid = () => {
               trainingPlan={trainingPlan}
               dayNum={dayNum}
               icon={icon}
+              handleComplete={handleComplete}
+              handleSave={handleSave}
+              savedWeights={savedWorkouts?.[workoutIndex]?.weights}
             />
           );
         }
@@ -52,6 +102,9 @@ const Grid = () => {
         return (
           <button
             onClick={() => {
+              if (isLocked) {
+                return;
+              }
               setSelectedWorkout(workoutIndex);
             }}
             className={"card plan-card  " + (isLocked ? "inactive" : "")}
